@@ -9,7 +9,7 @@ def username(question):
 def password(question):
 	import getpass
 	return getpass.getpass(question)
-
+  
 # Taken from http://code.activestate.com/recipes/577058-query-yesno/
 #  with some personal modifications
 def yes_no(question, default=True):
