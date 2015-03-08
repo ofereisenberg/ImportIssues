@@ -432,6 +432,7 @@ if __name__ == '__main__':
 	
 	if config.getboolean('settings', 'import-open-issues'):
 		issues += get_issues_by_state('source', 'open')
+		print ("after open issues - ", len(issues))
 	
 	if config.getboolean('settings', 'import-closed-issues'):
 		issues += get_issues_by_state('source', 'closed')
@@ -442,7 +443,27 @@ if __name__ == '__main__':
 	
 	# Further states defined within the function
 	# Finally, add these issues to the target repository
-	import_issues(issues)
+
+	print(" > Successfully imported", len(issues), " issues.")
+
+	for oneIssue in issues:
+		print(" Title:", oneIssue['title'])
+	
+	import csv
+	keys = issues[0].keys()
+	with open('data.csv','w') as csvfile:		
+		dict_writer = csv.DictWriter(csvfile, keys)
+		dict_writer.writeheader()
+		dict_writer.writerows(issues)
+
+	#with open('data.txt', 'w') as outfile:
+		#json.dump(issues[0], outfile)
+	
+	#with open('data.csv','w') as f:
+	#    f_csv = csv.DictWriter(f, headers)
+	#    f_csv.writeheader()
+	#   f_csv.writerows(rows)
+	#import_issues(issues)
 	
 	state.current = state.COMPLETE
 
